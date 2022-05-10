@@ -8,10 +8,14 @@
     "visualize": "meteor --production --extra-packages bundle-visualizer"
   },
   "dependencies": {
-    "@babel/runtime": "^7.15.4",
+    "@babel/runtime": "^7.17.9",
+    "axios": "^0.27.2",
+    "http": "^0.0.1-security",
     "meteor-node-stubs": "^1.1.0",
+    "mongo": "^0.1.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "webapp": "^0.0.2"
   },
   "meteor": {
     "mainModule": {
