@@ -1,13 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react"
 
+function updateLikeMovie(idMovie, moviesData) {
+    axios.put(`http://localhost:3000/api/like/${idMovie}`).then((res) => console.log("ok"))
+}
+
 
 function Test() {
 
     const [moviesData, setMoviesData] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:3000/api/discover/movie').then((res) => setMoviesData(res.data.results));
+        axios.get("http://localhost:3000/api/discover/movie").then((res) => setMoviesData(res.data.results));
     }, []);
 
     return (
@@ -23,6 +27,8 @@ function Test() {
                     return (
                         <div>
                             <h2 key={index}>{movie.title}</h2>
+                            <img src={"https://image.tmdb.org/t/p/w500" + movie.poster_path} alt="" />
+                            <button onClick={updateLikeMovie()}>Like</button>
                         </div>
                     )
                 })}
