@@ -3,8 +3,8 @@ import { WebApp } from 'meteor/webapp';
 import { Mongo } from 'meteor/mongo';
 import { HTTP } from 'meteor/http';
 import { functions } from './functions';
+import { dbAccess } from './db-access'
 
-const LikesCollection = new Mongo.Collection('likes');
 
 Meteor.startup(() => {});
 
@@ -22,13 +22,21 @@ WebApp.connectHandlers.use('/api/discover/movie', (req, res, next) => {
             newResponse.results.forEach(function(movie) {
 
                 // Pour chaque film on recherche l'id dans notre collection Mongo
-                let dbMovie = LikesCollection.findOne({ id: movie.id });
+                //let dbMovie = LikesCollection.findOne({ id: movie.id });
+                let dbMovieLiked = dbAccess.isLikedMovie(parseInt(movie.id));
+                let dbMovieStarred = dbAccess.isStarredMovie(parseInt(movie.id));
 
                 // Si l'id existe on ajoute l'attribut like au film, sinon on initialise cet attribut à 0
-                if (dbMovie) {
-                    movie.like = dbMovie.like;
+                if (dbMovieLiked) {
+                    movie.like = dbMovieLiked.like;
                 } else {
                     movie.like = 0;
+                }
+
+                if (dbMovieStarred) {
+                    movie.star = dbMovieStarred.star;
+                } else {
+                    movie.star = 0;
                 }
             });
         } else {
@@ -46,14 +54,14 @@ WebApp.connectHandlers.use('/api/like/', (req, res, next) => {
 
     let movie;
 
-    switch (req) {
+    switch (req.method) {
         case 'GET':
             break;
 
         case 'PUT':
             // On récupère l'id du film qui se trouve dans l'URL
-            const id = functions.getMovieIdFromUrl(url);
-            movie = likedMovie(parseInt(id));
+            const id = functions.getMovieIdFromUrl(req.url);
+            movie = dbAccess.likedMovie(parseInt(id));
 
             res.writeHead(200);
             res.write(JSON.stringify(movie));
@@ -65,20 +73,25 @@ WebApp.connectHandlers.use('/api/like/', (req, res, next) => {
     res.end();
 });
 
-function likedMovie(id) {
-    // On cherche l'id du film dans notre collection Mongo
-    let dbMovie = LikesCollection.findOne({ id: id });
+WebApp.connectHandlers.use('/api/star/', (req, res, next) => {
 
-    // Si l'id existe on incrémente l'attribut like de 1, 
-    // sinon on ajoute l'id à la collection et on initialise le nombre de like à 1
-    if (dbMovie) {
-        LikesCollection.update({ _id: dbMovie._id }, { $inc: { like: 1 } });
-    } else {
-        LikesCollection.insert({
-            id: id,
-            like: 1
-        });
+    let movie;
+
+    switch (req.method) {
+        case 'GET':
+            break;
+
+        case 'PUT':
+            // On récupère l'id du film qui se trouve dans l'URL
+            const id = functions.getMovieIdFromUrl(req.url);
+            movie = dbAccess.starredMovie(parseInt(id));
+
+            res.writeHead(200);
+            res.write(JSON.stringify(movie));
+            break;
+
+        default:
+            break;
     }
-    // On renvoie l'id et le nombre de like du film
-    return LikesCollection.findOne({ id: id });
-}
+    res.end();
+});
