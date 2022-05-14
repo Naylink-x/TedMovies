@@ -6,11 +6,11 @@ import { functions } from './functions';
 
 const LikesCollection = new Mongo.Collection('likes');
 
-Meteor.startup(() => {});
+Meteor.startup(() => { });
 
 WebApp.connectHandlers.use('/api/discover/movie', (req, res, next) => {
 
-    HTTP.call('GET', functions.theMovieDb('discover'), {}, function(error, response) {
+    HTTP.call('GET', functions.theMovieDb('discover'), {}, function (error, response) {
 
         let newResponse;
 
@@ -19,7 +19,7 @@ WebApp.connectHandlers.use('/api/discover/movie', (req, res, next) => {
             // sinon on affiche un message d'erreur dans la console
             newResponse = response.data;
 
-            newResponse.results.forEach(function(movie) {
+            newResponse.results.forEach(function (movie) {
 
                 // Pour chaque film on recherche l'id dans notre collection Mongo
                 let dbMovie = LikesCollection.findOne({ id: movie.id });
@@ -46,13 +46,13 @@ WebApp.connectHandlers.use('/api/like/', (req, res, next) => {
 
     let movie;
 
-    switch (req) {
+    switch (req.method) {
         case 'GET':
             break;
 
         case 'PUT':
             // On récupère l'id du film qui se trouve dans l'URL
-            const id = functions.getMovieIdFromUrl(url);
+            const id = functions.getMovieIdFromUrl(req.url);
             movie = likedMovie(parseInt(id));
 
             res.writeHead(200);
