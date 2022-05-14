@@ -6,11 +6,11 @@ import { functions } from './functions';
 import { dbAccess } from './db-access'
 
 
-Meteor.startup(() => {});
+Meteor.startup(() => { });
 
 WebApp.connectHandlers.use('/api/discover/movie', (req, res, next) => {
 
-    HTTP.call('GET', functions.theMovieDb('discover'), {}, function(error, response) {
+    HTTP.call('GET', functions.theMovieDb('discover'), {}, function (error, response) {
 
         let newResponse;
 
@@ -19,7 +19,7 @@ WebApp.connectHandlers.use('/api/discover/movie', (req, res, next) => {
             // sinon on affiche un message d'erreur dans la console
             newResponse = response.data;
 
-            newResponse.results.forEach(function(movie) {
+            newResponse.results.forEach(function (movie) {
 
                 // Pour chaque film on recherche l'id dans notre collection Mongo
                 //let dbMovie = LikesCollection.findOne({ id: movie.id });

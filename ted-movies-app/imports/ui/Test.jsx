@@ -1,13 +1,26 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react"
+import { FaAccessibleIcon } from "react-icons/fa";
 
 
 function Test() {
 
     const [moviesData, setMoviesData] = useState([])
+    const handleClick = (movie) => {
+        axios.put(`http://localhost:3000/api/like/${movie}`).then(resp => {
+            const newData = [...moviesData]
+            newData.map((el, index) => {
+                if (resp.data.id === el.id) {
+                    el.like = resp.data.like
+                }
+            })
+
+            setMoviesData(newData);
+        })
+    }
 
     useEffect(() => {
-        axios.get('http://localhost:3000/api/discover/movie').then((res) => setMoviesData(res.data.results));
+        axios.get("http://localhost:3000/api/discover/movie").then((res) => setMoviesData(res.data.results));
     }, []);
 
     return (
@@ -23,6 +36,9 @@ function Test() {
                     return (
                         <div>
                             <h2 key={index}>{movie.title}</h2>
+                            <img src={"https://image.tmdb.org/t/p/w500" + movie.poster_path} alt="" />
+                            <button onClick={() => handleClick(movie.id)}>Like</button>
+                            <span className="like"><FaAccessibleIcon /></span>
                         </div>
                     )
                 })}
