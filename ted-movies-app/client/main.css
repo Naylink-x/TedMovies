@@ -1,8 +1,83 @@
 body {
-  padding: 10px;
   font-family: sans-serif;
+  background-color: #cccccc;
 }
 
 .like {
   color: blue;
+  background: none;
+  border: 0px;
+  cursor: pointer;
+  padding: 0 10 0 0px;
+}
+
+.star {
+  color: rgb(255, 217, 0);
+  background: none;
+  border: 0px;
+  cursor: pointer;
+}
+
+.nostar {
+  color: #cccccc;
+  background: none;
+  border: 0px;
+  cursor: pointer;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+  min-width: 300px;
+}
+
+.result {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 16px;
+  gap: 16px;
+  overflow-wrap: break-word;
+  justify-content: space-between;
+}
+
+.poster {
+  height: 300px;
+  width: 200px;
+  border-radius: 5px;
+}
+
+.movie-title {
+  max-width: 250px;
+}
+
+h1,
+form {
+  text-align: center;
+}
+
+.counters {
+  padding-left: 10px
+}
+
+.button {
+  border: 1px solid rgba(5, 40, 242, 0.3);
+  padding: 8px 16px;
+  margin-left: 18px;
+  background-color: rgba(5, 40, 242, 0.2);
+  font-size: inherit;
+  font-family: inherit;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.button:hover {
+  background-color: rgba(5, 40, 242, 0.3);
+}
+
+#search-input {
+  padding: 10px 16px;
+  border-radius: 4px;
 }

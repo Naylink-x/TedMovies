@@ -2,7 +2,7 @@ import { API_URL } from './api-url';
 
 export const functions = {
     theMovieDb: _theMoviedb,
-    getMovieIdFromUrl: _getMovieIdFromUrl
+    getMovieIdFromUrl: _getMovieIdFromUrl,
 }
 
 function _theMoviedb(index) {
