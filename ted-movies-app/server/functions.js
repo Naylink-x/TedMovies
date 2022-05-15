@@ -3,7 +3,7 @@ import { dbAccess } from './db-access';
 
 export const functions = {
     theMovieDb: _theMoviedb,
-    getMovieIdFromUrl: _getMovieIdFromUrl,
+    getMovieParamsFromUrl: _getMovieParamsFromUrl,
     movieAttribute: _movieAttribute
 }
 
@@ -32,7 +32,7 @@ function _getSearchFromUrl(url) {
 
 }
 
-function _getMovieIdFromUrl(url) {
+function _getMovieParamsFromUrl(url) {
     return url.split('/')[1];
 }
 

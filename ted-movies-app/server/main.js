@@ -44,9 +44,11 @@ WebApp.connectHandlers.use('/api/search/movie', (req, res, next) => {
             break;
 
         case 'PUT':
+            // On récupère le contenu de la recherche depuis l'URL de la requête
+            query = functions.getMovieParamsFromUrl(req.url);
 
-            query = functions.getMovieIdFromUrl(req.url);
-
+            // On renvoie ensuite une requête GET vers le end-point search proposé par TheMovieDb
+            // en intégrant le contenu de la recherche
             HTTP.call('GET', functions.theMovieDb('search', query), {}, function(error, response) {
                 if (!error) {
                     res.writeHead(200);
@@ -72,7 +74,7 @@ WebApp.connectHandlers.use('/api/like/', (req, res, next) => {
 
         case 'PUT':
             // On récupère l'id du film qui se trouve dans l'URL
-            const id = functions.getMovieIdFromUrl(req.url);
+            const id = functions.getMovieParamsFromUrl(req.url);
 
             // Modification de la valeur de l'attribut 'like' dans la collection Mongo
             movie = dbAccess.likedMovie(parseInt(id));
@@ -97,7 +99,7 @@ WebApp.connectHandlers.use('/api/star/', (req, res, next) => {
 
         case 'PUT':
 
-            const id = functions.getMovieIdFromUrl(req.url);
+            const id = functions.getMovieParamsFromUrl(req.url);
 
             movie = dbAccess.starredMovie(parseInt(id));
 

@@ -31,9 +31,12 @@ function _likedMovie(id) {
 }
 
 function _starredMovie(id) {
-
+    // On cherche l'id du film dans notre collection Mongo
     let dbMovie = StarsCollection.findOne({ id: id });
 
+    // Si l'id existe et que l'attribut star = 1 alors on passe la valeur de l'attribut à 0
+    // si l'attribut vaut 0 on passe sa valeur à 1
+    // sinon on ajoute l'id à la collection et on initialise l'attribut star à 1
     if (dbMovie) {
         if (dbMovie.star === 1) {
             StarsCollection.update({ id: dbMovie.id }, { $set: { star: 0 } });
