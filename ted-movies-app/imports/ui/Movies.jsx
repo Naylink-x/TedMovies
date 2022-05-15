@@ -9,7 +9,7 @@ import toggleStarState from "../front-end-functions/toggleStarState";
 function Movies({ moviesData, setMoviesData, isFavorite }) {
     useEffect(() => {
         axios.get("http://localhost:3000/api/discover/movie").then((res) => setMoviesData(res.data.results));
-    }, []);
+    }, [moviesData]);
     return (
         <div className="result">
             {moviesData.map((movie, index) => {
