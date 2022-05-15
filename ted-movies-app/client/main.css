@@ -8,7 +8,8 @@ body {
   background: none;
   border: 0px;
   cursor: pointer;
-  padding: 0 10 0 0px;
+  padding: 0px 10px 0px 0px;
+  margin-left: 5px;
 }
 
 .star {
@@ -52,8 +53,7 @@ body {
   max-width: 250px;
 }
 
-h1,
-form {
+h1 {
   text-align: center;
 }
 
@@ -64,7 +64,8 @@ form {
 .button {
   border: 1px solid rgba(5, 40, 242, 0.3);
   padding: 8px 16px;
-  margin-left: 18px;
+  margin-left: 12px;
+  margin-right: auto;
   background-color: rgba(5, 40, 242, 0.2);
   font-size: inherit;
   font-family: inherit;
@@ -80,4 +81,13 @@ form {
 #search-input {
   padding: 10px 16px;
   border-radius: 4px;
+}
+
+#search-button {
+  text-align: center;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
 }
