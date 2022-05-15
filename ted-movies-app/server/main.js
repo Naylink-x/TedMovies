@@ -6,48 +6,60 @@ import { functions } from './functions';
 import { dbAccess } from './db-access'
 
 
-Meteor.startup(() => { });
+Meteor.startup(() => {});
 
 WebApp.connectHandlers.use('/api/discover/movie', (req, res, next) => {
 
-    HTTP.call('GET', functions.theMovieDb('discover'), {}, function (error, response) {
+    HTTP.call('GET', functions.theMovieDb('discover'), {}, function(error, response) {
 
         let newResponse;
 
         if (!error) {
             // Si la requête aboutie on récupère le résultat (la liste des films), 
-            // sinon on affiche un message d'erreur dans la console
+            // sinon on affiche une erreur 404
             newResponse = response.data;
 
-            newResponse.results.forEach(function (movie) {
+            newResponse.results.forEach(function(movie) {
 
-                // Pour chaque film on recherche l'id dans notre collection Mongo
-                //let dbMovie = LikesCollection.findOne({ id: movie.id });
-                let dbMovieLiked = dbAccess.isLikedMovie(parseInt(movie.id));
-                let dbMovieStarred = dbAccess.isStarredMovie(parseInt(movie.id));
+                // Ajout des attributs 'like' et 'star' à chaque film
+                functions.movieAttribute('like', movie);
+                functions.movieAttribute('star', movie);
 
-                // Si l'id existe on ajoute l'attribut like au film, sinon on initialise cet attribut à 0
-                if (dbMovieLiked) {
-                    movie.like = dbMovieLiked.like;
-                } else {
-                    movie.like = 0;
-                }
-
-                if (dbMovieStarred) {
-                    movie.star = dbMovieStarred.star;
-                } else {
-                    movie.star = 0;
-                }
             });
+
+            // On renvoie ensuite la liste des films modifiée
+            res.writeHead(200);
+            res.write(JSON.stringify(newResponse));
         } else {
             res.writeHead(404);
         }
-
-        // On renvoie ensuite la liste des films modifiée
-        res.writeHead(200);
-        res.write(JSON.stringify(newResponse));
         res.end();
     });
+});
+
+WebApp.connectHandlers.use('/api/search/movie', (req, res, next) => {
+
+    switch (req.method) {
+        case 'GET':
+            break;
+
+        case 'PUT':
+
+            query = functions.getMovieIdFromUrl(req.url);
+
+            HTTP.call('GET', functions.theMovieDb('search', query), {}, function(error, response) {
+                if (!error) {
+                    res.writeHead(200);
+                    res.write(JSON.stringify(response));
+                } else {
+                    res.writeHead(404);
+                }
+                res.end();
+            });
+
+        default:
+            break;
+    }
 });
 
 WebApp.connectHandlers.use('/api/like/', (req, res, next) => {
@@ -61,6 +73,8 @@ WebApp.connectHandlers.use('/api/like/', (req, res, next) => {
         case 'PUT':
             // On récupère l'id du film qui se trouve dans l'URL
             const id = functions.getMovieIdFromUrl(req.url);
+
+            // Modification de la valeur de l'attribut 'like' dans la collection Mongo
             movie = dbAccess.likedMovie(parseInt(id));
 
             res.writeHead(200);
@@ -82,8 +96,9 @@ WebApp.connectHandlers.use('/api/star/', (req, res, next) => {
             break;
 
         case 'PUT':
-            // On récupère l'id du film qui se trouve dans l'URL
+
             const id = functions.getMovieIdFromUrl(req.url);
+
             movie = dbAccess.starredMovie(parseInt(id));
 
             res.writeHead(200);
