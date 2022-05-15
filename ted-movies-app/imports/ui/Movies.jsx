@@ -6,9 +6,16 @@ import handleClick from "../front-end-functions/handleClick";
 import toggleStarState from "../front-end-functions/toggleStarState";
 
 
-function Movies({ moviesData, setMoviesData, isFavorite }) {
+function Movies({ moviesData, setMoviesData, isFavorite, isSearch, searchText }) {
     useEffect(() => {
-        axios.get("http://localhost:3000/api/discover/movie").then((res) => setMoviesData(res.data.results));
+        if (isSearch === true) {
+
+            axios.put(`http://localhost:3000/api/search/movie/${searchText}`).then((res) => setMoviesData(res.data.data.results));
+        }
+
+        if (isSearch === false) {
+            axios.get("http://localhost:3000/api/discover/movie").then((res) => setMoviesData(res.data.results));
+        }
     }, [moviesData]);
     return (
         <div className="result">
@@ -22,8 +29,7 @@ function Movies({ moviesData, setMoviesData, isFavorite }) {
                             <h2 className="movie-title" key={index}>{movie.title}</h2>
                             <img className="poster" src={"https://image.tmdb.org/t/p/w500" + movie.poster_path} alt="" />
                             <span className="counters" >{movie.like}</span>
-                            <button className="like" onClick={() => handleClick(movie.id, 'like', moviesData, setMoviesData)}><FaThumbsUp /></button>
-                            <button className={toggleStarState(movie.star) ? 'star' : 'nostar'} onClick={() => { handleClick(movie.id, 'star'); }}><FaStar /></button>
+                            {!isSearch ? <span><button className="like" onClick={() => handleClick(movie.id, 'like', moviesData, setMoviesData)}><FaThumbsUp /></button><button className={toggleStarState(movie.star) ? 'star' : 'nostar'} onClick={() => { handleClick(movie.id, 'star'); }}><FaStar /></button></span> : null}
                         </div>
                     </Card>
                 )
