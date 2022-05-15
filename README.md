@@ -2,6 +2,11 @@
 
 # Comment faire fonctionner notre application ?
 
+### Pré-requis
+Avoir installé sur son PC :
+- nodeJS
+- Meteor
+
 ### Récupérer Les fichiers :
 
 Dans un premier temps, il est nécessaire de se rendre sur le lien du repository GIT afin d'aller chercher le lien https du clone de notre application.<br>
@@ -16,9 +21,9 @@ Il faut ensuite de rendre dans un terminal à l'emplacement voulu pour pouvoir i
 ### Installation de notre application :
 
 Maintenant, il est nécessaire de déplacer le fichier téléchargé <b>api-url.js</b> dans le dossier <b>ted-movies-app/server</b> au côté des fichiers <b>db-access.js</b>, <b>functions.js</b>, <b>local-data.js</b>, <b>main.js</b><br>
-Une fois cela fait, une série de commandes sera à taper dans un terminal présent sur le dossier <b>ted-movies-app</b> que voici :<br>
-<br>``meteor npm install --save react react-dom axios react-icons`` <br>Commande qui va installer les dépendances react, react-dom, axios et enfin react-icons sur l'application. <br>
-<br>``npm install`` <br>
+Une fois cela fait, une commandes sera à taper dans un terminal présent sur le dossier <b>ted-movies-app</b> que voici :<br>
+
+``npm install`` <br>
 Celle-ci va installer l'ensemble des dépendances mentionner dans le fichier package.json.
 
 ### Lancement de l'application :
