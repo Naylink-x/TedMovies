@@ -2,7 +2,7 @@
 
 # Comment faire fonctionner notre application ?
 
-###Récupérer Les fichiers :
+### Récupérer Les fichiers :
 
 Dans un premier temps, il est nécessaire de se rendre sur le lien du repository GIT afin d'aller chercher le lien https du clone de notre application.<br>
 Il faut ensuite de rendre dans un terminal à l'emplacement voulu pour pouvoir installer notre application et run la commande :<br>
@@ -13,7 +13,7 @@ Il faut ensuite de rendre dans un terminal à l'emplacement voulu pour pouvoir i
 <br>Enfin, il ne faut pas oublier de télécharger le fichier join dans le mail qui se nomme <b>api-url.js</b>, fichier qui contient le lien et la clé pour accéder à l'api theMovieDb. Nous avons fait cela dans le but de sécuriser notre application et ne pas donner accès à n'importe qui avec nos identifiants à l'API theMovieDb.
 
 
-###Installation de notre application :
+### Installation de notre application :
 
 Maintenant, il est nécessaire de déplacer le fichier téléchargé <b>api-url.js</b> dans le dossier <b>ted-movies-app/server</b> au côté des fichiers <b>db-access.js</b>, <b>functions.js</b>, <b>local-data.js</b>, <b>main.js</b><br>
 Une fois cela fait, une série de commandes sera à taper dans un terminal présent sur le dossier <b>ted-movies-app</b> que voici :<br>
@@ -21,7 +21,7 @@ Une fois cela fait, une série de commandes sera à taper dans un terminal prés
 <br>``npm install`` <br>
 Celle-ci va installer l'ensemble des dépendances mentionner dans le fichier package.json.
 
-###Lancement de l'application :
+### Lancement de l'application :
 
 Pour lancer notre application, il suffit maintenant de lancer la commande :<br>
 <br> ``meteor`` <br>
